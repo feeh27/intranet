@@ -55,7 +55,7 @@ docker-compose up --build -d
 
 Acesse [http://localhost:8000](http://localhost:8000) e você verá algo como abaixo:
 
-![image](browser.jpg)
+![image](browser.JPG)
 
 Caso o resultado seja parecido com a imagem acima sua configuração foi um sucesso!
 
