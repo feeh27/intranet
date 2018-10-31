@@ -7,7 +7,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 
 /**
- * Class Controller: responsável por gerenciar as chamadas das controllers
+ * Class Controller: Responsável por gerenciar as chamadas das Controllers
  *
  * @package     App\Http\Controllers
  * @category    API
