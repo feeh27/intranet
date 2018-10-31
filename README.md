@@ -119,6 +119,7 @@ Para inserir novos dados para semear o sistema na instalação, basta alterar o 
 
  - Instalação: [https://lumen.laravel.com/docs/5.7/installation](https://lumen.laravel.com/docs/5.7/installation)
  - Configuração de ambientes: [https://lumen.laravel.com/docs/5.7/configuration](https://lumen.laravel.com/docs/5.7/configuration)
+ - Autorizações: [https://lumen.laravel.com/docs/5.7/authorization](https://lumen.laravel.com/docs/5.7/authorization)
 
 ### Tutoriais
 
