@@ -129,6 +129,10 @@ Para inserir novos dados para semear o sistema na instalação, basta alterar o 
  - Seeds: [https://medium.com/by-vinicius-reis/trabalhando-com-seeds-no-laravel-5-142829ddc32e](https://medium.com/by-vinicius-reis/trabalhando-com-seeds-no-laravel-5-142829ddc32e)
  - Observers: [https://quickadminpanel.com/blog/log-your-laravel-model-data-changes-with-observers/](https://quickadminpanel.com/blog/log-your-laravel-model-data-changes-with-observers/)
  - Observers: [https://bosnadev.com/2014/12/28/laravel-model-observers/](https://bosnadev.com/2014/12/28/laravel-model-observers/)
+ - Autenticação: [http://zeeshanu.info/blog/2017/09/05/jwt-authentication-for-Lumen-5.4/](http://zeeshanu.info/blog/2017/09/05/jwt-authentication-for-Lumen-5.4/)
+ - Autenticação: [https://medium.com/tech-tajawal/jwt-authentication-for-lumen-5-6-2376fd38d454](https://medium.com/tech-tajawal/jwt-authentication-for-lumen-5-6-2376fd38d454)
+ - Exportar para diversos formatos: [https://github.com/nathanmac/Parser](https://github.com/nathanmac/Parser)
+ - Pemissões: [https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780](https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780)
 
 ### Cursos
  
@@ -140,10 +144,10 @@ Para inserir novos dados para semear o sistema na instalação, basta alterar o 
 Por padrão o Lumen / Laravel possuem integração com o PHP Unit.
 PHP Unit é uma ferramenta para testes e sua utilização é simples, basta criar um novo arquivo para testes na pasta `html/app/tests`, esse arquivo deve ser uma classe e extender `TestCase`.
 
-###Documentação 
+### Documentação 
  - Oficial do Lumen: [https://lumen.laravel.com/docs/5.7/testing](https://lumen.laravel.com/docs/5.7/testing)
 
-###Tutoriais
+### Tutoriais
  - Testes básicos: [https://medium.com/stephenjudesuccess/testing-lumen-api-with-phpunit-tests-555835724b96](https://medium.com/stephenjudesuccess/testing-lumen-api-with-phpunit-tests-555835724b96)
  
 ### Comando para executar testes

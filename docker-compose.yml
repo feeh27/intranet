@@ -10,7 +10,7 @@ services:
     - ./html/:/var/www/html
     - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     - ./docker/php/php-ini:/usr/local/etc/php/custom.d
-    working_dir: /var/www/html/intranet/public
+    working_dir: /var/www/html/api/public
     environment:
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d"
       DB_CONNECTION: ${DB_CONNECTION}
