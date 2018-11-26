@@ -1,6 +1,6 @@
 # Intranet API - Lumen
 
-Sistema desenvolvido em PHP com o microframework Lumen 5.7.1 (Laravel Componentes 5.7.\*) e PHP 7.2
+Sistema desenvolvido em PHP com o microframework Lumen 5.7.5 (Laravel Componentes 5.7.\*) e PHP 7.2
 
 ## Requisitos
  - Docker
@@ -14,7 +14,7 @@ Utilizando o Git para baixar o app e os arquivos de configuração
 ### Clone esse repositório
 
 ```bash
-git clone https://github.com/ioteducation/intranet.git
+git clone https://github.com/feeh27/intranet.git
 cd intranet
 ```
 
@@ -120,6 +120,7 @@ Para inserir novos dados para semear o sistema na instalação, basta alterar o 
  - Instalação: [https://lumen.laravel.com/docs/5.7/installation](https://lumen.laravel.com/docs/5.7/installation)
  - Configuração de ambientes: [https://lumen.laravel.com/docs/5.7/configuration](https://lumen.laravel.com/docs/5.7/configuration)
  - Autorizações: [https://lumen.laravel.com/docs/5.7/authorization](https://lumen.laravel.com/docs/5.7/authorization)
+ - Autenticação JWT: [https://github.com/tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth)
 
 ### Tutoriais
 
@@ -130,10 +131,12 @@ Para inserir novos dados para semear o sistema na instalação, basta alterar o 
  - Seeds: [https://medium.com/by-vinicius-reis/trabalhando-com-seeds-no-laravel-5-142829ddc32e](https://medium.com/by-vinicius-reis/trabalhando-com-seeds-no-laravel-5-142829ddc32e)
  - Observers: [https://quickadminpanel.com/blog/log-your-laravel-model-data-changes-with-observers/](https://quickadminpanel.com/blog/log-your-laravel-model-data-changes-with-observers/)
  - Observers: [https://bosnadev.com/2014/12/28/laravel-model-observers/](https://bosnadev.com/2014/12/28/laravel-model-observers/)
- - Autenticação: [http://zeeshanu.info/blog/2017/09/05/jwt-authentication-for-Lumen-5.4/](http://zeeshanu.info/blog/2017/09/05/jwt-authentication-for-Lumen-5.4/)
- - Autenticação: [https://medium.com/tech-tajawal/jwt-authentication-for-lumen-5-6-2376fd38d454](https://medium.com/tech-tajawal/jwt-authentication-for-lumen-5-6-2376fd38d454)
+ - Autenticação Pt1: [https://ngide.net/posts/membuat-rest-api-dengan-lumen-authentication-dengan-jwt-auth](https://ngide.net/posts/membuat-rest-api-dengan-lumen-authentication-dengan-jwt-auth)
+ - Autenticação Pt2: [https://github.com/tymondesigns/jwt-auth/issues/967#issuecomment-419758798](https://github.com/tymondesigns/jwt-auth/issues/967#issuecomment-419758798)
  - Exportar para diversos formatos: [https://github.com/nathanmac/Parser](https://github.com/nathanmac/Parser)
- - Pemissões: [https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780](https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780)
+ - Permissões: [https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780](https://code.tutsplus.com/tutorials/gates-and-policies-in-laravel--cms-29780)
+ - Canal Laravel: [https://www.youtube.com/channel/UC0Da9RonsYYqh2WK_m61t2g](https://www.youtube.com/channel/UC0Da9RonsYYqh2WK_m61t2g)
+ - ACL: [https://www.youtube.com/watch?v=-AVa6GNpEL8&list=PLVSNL1PHDWvTch1r8uTSluw9SkzSA9cDJ](https://www.youtube.com/watch?v=-AVa6GNpEL8&list=PLVSNL1PHDWvTch1r8uTSluw9SkzSA9cDJ)
 
 ### Cursos
  

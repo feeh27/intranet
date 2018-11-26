@@ -1,0 +1,22 @@
+{
+    "delete_success":                   "Registro deletado com sucesso!",
+    "delete_error":                     "Erro ao deletar registro!",
+    "restore_success":                  "Registro restaurado com sucesso!",
+    "restore_error":                    "Erro ao restaurar registro!",
+    "update_success":                   "Registro atualizado com sucesso!",
+    "update_error":                     "Erro ao atualizar registro!",
+    "required_without":                 "Esse campo só é obrigatório quando :name não está presente!",
+    "alpha_emphasis_validation":        "Esse campo aceita somente letras com ou sem acento!",
+    "alpha_emphasis_space_validation":  "Esse campo aceita somente letras com ou sem acento e espaço!",
+    "alpha_lower_dashes_validation":    "Esse campo aceita somente letras minúsculas, hífen e underline!",
+    "alpha_lower_underline_validation": "Esse campo aceita somente letras minúsculas e underline!",
+    "enabled_disabled_validation":      "Esse campo aceita somente sim(1) ou não(0)!",
+    "exists_id_validation":             ":name selecionado não existe!",
+    "unique_validation":                ":name deve ser único!",
+    "profile":                          "O perfil",
+    "group":                            "O grupo",
+    "module":                           "O módulo",
+    "email":                            "O e-mail",
+    "login":                            "O login",
+    "user_not_found":                   "Usuário não encontrado"
+}
