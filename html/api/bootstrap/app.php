@@ -23,8 +23,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+//$app->withFacades(true,['App\Infrastructure\Regex\Regex' => 'Regex']);
 $app->withFacades();
-
 $app->withEloquent();
 
 /*
@@ -68,7 +68,9 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    'jwt.auth' => App\Http\Middleware\JwtMiddleware::class,
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'jwt.auth' => Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+    'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
 ]);
 
 /*
@@ -83,8 +85,13 @@ $app->routeMiddleware([
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -102,5 +109,7 @@ $app->router->group([
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
+
+$app->configure('app');
 
 return $app;

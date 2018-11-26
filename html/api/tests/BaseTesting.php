@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
  * @package     Tests
  * @category    API
  * @author      Felipe Dominguesche <fe.dominguesche@gmail.com>
- * @version     Version 0.1.0
+ * @version     Version 0.2.0
  * @access      public
  * @link        https://www.github.com/feeh27/intranet
  * @since       Version 0.1.0
@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 class BaseTesting extends TestCase
 {
     protected $jsonStructureLumen;
-    protected $jsonReturnLumen;
     protected $uri;
     protected $token;
     protected $jsonStructure;
@@ -26,6 +25,8 @@ class BaseTesting extends TestCase
     protected $putData;
     protected $patchData;
     protected $nextId;
+    protected $model;
+    protected $errorData;
 
     /**
      * BaseTesting constructor.
@@ -35,10 +36,9 @@ class BaseTesting extends TestCase
     public function __construct(BaseModel $model)
     {
         parent::__construct(null, [], '');
+
         $this->jsonStructureLumen = ['id', 'created_at', 'updated_at', 'deleted_at'];
-        $this->jsonReturnLumen    = ['id' => $this->nextId, 'deleted_at' => null];
         $this->uri = $model->uri;
-        $this->token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJzdWIiOjEsImlhdCI6MTU0MDk0MzU1MiwiZXhwIjoxNTQwOTQ3MTUyfQ.jC8gpDfnBMjQCg2l2Weg1yM0yX8tKvxc2cgDhLrVIBE';
         $this->jsonStructure = $model->getFillable();
         foreach (array_keys($this->hiddenData) as $array_key) {
             $key = array_search($array_key, $this->jsonStructure);
@@ -48,13 +48,27 @@ class BaseTesting extends TestCase
     }
 
     /**
+     * Gera token de acesso de acordo com as credenciais passadas
+     * @since Version 0.2.0
+     */
+    public function getToken()
+    {
+        $tokenAuth   = ['email'=>'token@gmail.com', 'password'=>'123456'];
+        $tokenPost   = json_decode($this->post('auth/login',$tokenAuth)->response->getContent());
+        $this->token = $tokenPost->token;
+        $this->post('auth/login',$tokenAuth)
+            ->seeStatusCode(200)
+            ->seeJsonStructure(['*' => ['token']]);
+    }
+
+    /**
      * Responsável pelos testes da rota get
      * @since Version 0.1.0
      */
     public function testGet()
     {
+        $this->getToken();
         $jsonStructure = array_merge($this->jsonStructureLumen, $this->jsonStructure);
-
         $this->get($this->uri.'/?token='.$this->token)
             ->seeStatusCode(200)
             ->seeJsonStructure(['*' => $jsonStructure]);
@@ -66,6 +80,7 @@ class BaseTesting extends TestCase
      */
     public function testGetById()
     {
+        $this->getToken();
         $jsonStructure = array_merge($this->jsonStructureLumen, $this->jsonStructure);
         $this->get($this->uri.'/1?token='.$this->token)
             ->seeStatusCode(200)
@@ -78,14 +93,17 @@ class BaseTesting extends TestCase
      */
     public function testPost()
     {
-        $jsonStructure  = array_merge(array_keys($this->postData), $this->jsonStructureLumen);
+        $this->getToken();
+        $jsonStructure = array_merge(array_keys($this->postData), $this->jsonStructureLumen);
         $key = array_search('deleted_at', $jsonStructure);
         unset($jsonStructure[$key]);
 
         $this->postData = array_merge($this->postData, $this->hiddenData);
-        $this->post($this->uri.'/?token='.$this->token, $this->postData)
+
+        $this->post($this->uri . '/?token=' . $this->token, $this->postData)
             ->seeStatusCode(201)
             ->seeJsonStructure(['*' => $jsonStructure]);
+
     }
 
     /**
@@ -94,13 +112,11 @@ class BaseTesting extends TestCase
      */
     public function testPut()
     {
-        $jsonStructure = array_merge($this->jsonStructureLumen, $this->jsonStructure);
-        $this->jsonReturnLumen = array_merge($this->jsonReturnLumen, $this->putData);
-
+        $this->getToken();
         $this->put($this->uri.'/'.$this->nextId.'?token='.$this->token, $this->putData)
             ->seeStatusCode(200)
-            ->seeJsonStructure(['*' => $jsonStructure])
-            ->seeJson($this->jsonReturnLumen);
+            ->seeJsonStructure(['*' =>['message']])
+            ->seeJsonEquals(['message' => __('update_success')]);
     }
 
     /**
@@ -109,13 +125,11 @@ class BaseTesting extends TestCase
      */
     public function testPatch()
     {
-        $jsonStructure = array_merge($this->jsonStructureLumen, $this->jsonStructure);
-        $this->jsonReturnLumen = array_merge($this->jsonReturnLumen, $this->patchData);
-
+        $this->getToken();
         $this->patch($this->uri.'/'.$this->nextId.'?token='.$this->token, $this->patchData)
             ->seeStatusCode(200)
-            ->seeJsonStructure(['*' => $jsonStructure])
-            ->seeJson($this->jsonReturnLumen);
+            ->seeJsonStructure(['*' =>['message']])
+            ->seeJsonEquals(['message' => __('update_success')]);
     }
 
     /**
@@ -124,6 +138,7 @@ class BaseTesting extends TestCase
      */
     public function testDelete()
     {
+        $this->getToken();
         $this->delete($this->uri.'/'.$this->nextId.'?token='.$this->token)
             ->seeStatusCode(200)
             ->seeJsonStructure(['*' =>['message']])
@@ -136,9 +151,24 @@ class BaseTesting extends TestCase
      */
     public function testRestore()
     {
+        $this->getToken();
         $this->patch($this->uri.'/restore/'.$this->nextId.'?token='.$this->token)
             ->seeStatusCode(200)
             ->seeJsonStructure(['*' =>['message']])
             ->seeJsonEquals(['message' => __('restore_success')]);
+    }
+
+    /**
+     * Responsável pelos testes de handling de erros
+     * @since Version 0.2.0
+     */
+    public function testErrorsHandling()
+    {
+        $this->getToken();
+        foreach ($this->errorData as $field) {
+            $this->patch($this->uri . '/' . $this->nextId . '?token=' . $this->token, $field)
+                ->seeStatusCode(422)
+                ->seeJsonStructure(['*'=>[array_keys($field)]]);
+        }
     }
 }
