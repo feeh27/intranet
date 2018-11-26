@@ -1,0 +1,22 @@
+{
+    "delete_success":                   "Register deleted successfully!",
+    "delete_error":                     "Error while deleting register!",
+    "restore_success":                  "Register restored successfully!",
+    "restore_error":                    "Error while restoring register!",
+    "update_success":                   "Register updated successfully!",
+    "update_error":                     "Error while updating register!",
+    "required_without":                 "This field is only required when :name is not present!",
+    "alpha_emphasis_validation":        "This field accepts only letters with or without accent!",
+    "alpha_emphasis_space_validation":  "This field accepts only letters with or without accents and space!",
+    "alpha_lower_dashes_validation":    "This field accepts only lowercase, hyphen and underline!",
+    "alpha_lower_underline_validation": "This field accepts only lowercase and underline!",
+    "enabled_disabled_validation":      "This field accepts only yes(1) or no(0)!",
+    "exists_id_validation":             "The selected :name does not exist!",
+    "unique_validation":                "The :name must be unique!",
+    "profile":                          "profile",
+    "group":                            "group",
+    "module":                           "module",
+    "email":                            "e-mail",
+    "login":                            "login",
+    "user_not_found":                   "User not found"
+}

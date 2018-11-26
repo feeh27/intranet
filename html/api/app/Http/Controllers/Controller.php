@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\RepositoryLumen;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use App\Domain\Auth\Module\Module;
+use App\Domain\Auth\Module\ModuleRepository;
+use App\Infrastructure\BaseServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
 /**
  * Class Controller: Responsável por gerenciar as chamadas das Controllers
@@ -12,45 +15,35 @@ use Illuminate\Http\Request;
  * @package     App\Http\Controllers
  * @category    API
  * @author      Felipe Dominguesche <fe.dominguesche@gmail.com>
- * @version     Version 0.1.0
+ * @version     Version 0.2.0
  * @access      public
  * @link        https://www.github.com/feeh27/intranet
  * @since       Version 0.1.0
  */
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     /**
      * @since Version 0.1.0
-     * @var RepositoryLumen
+     * @var BaseServices
      */
-    protected $repository;
+    protected $services;
 
     /**
-     * @since Version 0.1.0
-     * @var array
+     * @since Version 0.2.0
+     * @var String
      */
-    protected $rules;
-
-    /**
-     * @since Version 0.1.0
-     * @var array
-     */
-    protected $messages;
-
-    /**
-     * @since Version 0.1.0
-     * @var array
-     */
-    protected $customAttributes;
+    protected $module;
 
     /**
      * Controller constructor.
      * @since Version 0.1.0
-     * @param RepositoryLumen $repository
+     * @param BaseServices $services
+     * @param String $module
      */
-    public function __construct(RepositoryLumen $repository)
+    public function __construct(BaseServices $services, string $module)
     {
-        $this->repository = $repository;
+        $this->services = $services;
+        $this->module = $module;
         $this->rules = [];
         $this->messages = [];
         $this->customAttributes = [];
@@ -59,70 +52,94 @@ class Controller extends BaseController
     /**
      * Busca todos os registros
      * @since Version 0.1.0
-     * @return array
+     * @return object
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function get() : object
+    public function get(): object
     {
-        return response($this->repository->findAll(),200);
+        $this->authorize('get_'.$this->module);
+        return response($this->services->findAll(),200);
     }
 
     /**
      * Busca um registro pelo ID
-     * @since Version 0.1.0
-     * @param $id
-     * @return array
+     * @since  Version 0.1.0
+     * @param  int $id
+     * @return object
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function getById($id) : object
+    public function getById(int $id): object
     {
-        return response($this->repository->findById($id),200);
+        $this->authorize('get_'.$this->module);
+        return response($this->services->findById($id),200);
     }
 
     /**
      * Cria um novo registro
      * @since Version 0.1.0
      * @param Request $request
-     * @return array
+     * @return object
      * @throws \Illuminate\Validation\ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function create(Request $request) : object
+    public function create(Request $request): object
     {
-        $this->validate($request, $this->rules, $this->messages, $this->customAttributes);
-        return response($this->repository->create($request->all()), 201);
+        $this->authorize('create_'.$this->module);
+        return response($this->services->create($request), 201);
     }
 
     /**
-     * Altera o registro com o id informado
-     * @since Version 0.1.0
-     * @param $id
-     * @param Request $request
-     * @return array
+     * Altera o registro do id informado
+     * @since  Version 0.1.0
+     * @param  int $id
+     * @param  Request $request
+     * @return object
      * @throws \Illuminate\Validation\ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update($id, Request $request) : object
+    public function update(int $id, Request $request): object
     {
-        $this->validate($request, $this->rules, $this->messages, $this->customAttributes);
-        return response($this->repository->update($id, $request->all()), 201);
+        $this->authorize('update_'.$this->module);
+        return response($this->services->update($id, $request), 200);
     }
 
     /**
      * Deleta o registro com o id informado
-     * @since Version 0.1.0
-     * @param $id
-     * @return array
+     * @since  Version 0.1.0
+     * @param  int $id
+     * @return object
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete($id) : object
+    public function delete(int $id): object
     {
-        return response($this->repository->delete($id),200);
+        $this->authorize('delete_'.$this->module);
+        return response($this->services->delete($id),200);
     }
 
     /**
      * Restaura o registro com o id informado
-     * @since Version 0.1.0
-     * @param $id
-     * @return array
+     * @since  Version 0.1.0
+     * @param  int $id
+     * @return object
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function restore($id) : object
+    public function restore(int $id): object
     {
-        return response($this->repository->restore($id),200);
+        $this->authorize('restore_'.$this->module);
+        return response($this->services->restore($id),200);
     }
+
+    /* */
+    public function permissions()
+    {
+        echo '<pre>';
+        foreach ((new ModuleRepository(new Module()))->findAll() as $module) {
+            echo str_pad($module->name, 13).' : ';
+            var_dump(Auth::user()->hasPermission($module));
+        }
+        echo '</pre>';
+        exit;
+    }
+    /* */
+
 }
